@@ -6,6 +6,7 @@ import json
 import time
 from django.conf import settings
 from apps.meetings.models import Meeting, Recap, ActionItem, ProcessingLog
+from apps.agents.classifier import classify_meeting_type
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +47,10 @@ TRANSCRIPT:
 {meeting.raw_transcript}
 
 Generate a structured recap as JSON."""
+
+    meeting_type = classify_meeting_type(meeting.title, meeting.raw_transcript, meeting.duration_minutes or 0)
+    meeting.meeting_type = meeting_type
+    meeting.save(update_fields=["meeting_type"])
 
     start = time.time()
     client = get_llm_client()

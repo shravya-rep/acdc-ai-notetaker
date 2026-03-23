@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Action Item Reminder</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 32px auto; background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0; }
+    .header { background: #d97706; padding: 24px 32px; }
+    .header h1 { color: #ffffff; margin: 0; font-size: 20px; }
+    .header p { color: #fde68a; margin: 4px 0 0; font-size: 13px; }
+    .body { padding: 32px; }
+    .item-card { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+    .item-card .desc { font-size: 15px; font-weight: 600; color: #111827; }
+    .item-card .from { font-size: 13px; color: #6b7280; margin-top: 6px; }
+    .due-badge { display: inline-block; background: #fee2e2; color: #b91c1c; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 12px; margin-top: 8px; }
+    .cta { text-align: center; margin-top: 28px; }
+    .cta a { background: #1a56db; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-size: 14px; font-weight: 600; }
+    .footer { background: #f9fafb; padding: 20px 32px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #9ca3af; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Action Item Reminder</h1>
+      <p>You have {{ item_count }} item{{ item_count|pluralize }} due {{ due_label }}</p>
+    </div>
+    <div class="body">
+      <p style="font-size:15px;color:#374151;">Hi {{ first_name }}, here's a reminder about your upcoming action item{{ item_count|pluralize }}:</p>
+
+      {% for item in items %}
+      <div class="item-card">
+        <div class="desc">{{ item.description }}</div>
+        <div class="from">From: <strong>{{ item.meeting_title }}</strong></div>
+        <span class="due-badge">Due: {{ item.due_date }}</span>
+      </div>
+      {% endfor %}
+
+      <div class="cta">
+        <a href="{{ dashboard_url }}">Mark as Complete in Dashboard</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p>ACDC AI Notetaker &bull; You're receiving this because you have open action items.</p>
+    </div>
+  </div>
+</body>
+</html>
