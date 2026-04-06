@@ -54,9 +54,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - backend
-      - redis
-      - db
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_started
 
   celery_beat:
     build:
@@ -68,9 +71,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - backend
-      - redis
-      - db
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_started
 
   frontend:
     build:
